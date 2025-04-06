@@ -1,0 +1,34 @@
+
+services:
+  # redis:
+  #   image: redis:7-alpine
+  #   restart: always
+  #   ports:
+  #     - "6379:6379"
+  #   command: redis-server --save 20 1 --loglevel warning --requirepass devtoolssecret
+  #   volumes:
+  #     - redis:/data
+  
+  db:
+    image: postgres:14.2-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: postgis
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: devtoolssecret
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - dbgis-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    hostname: dbgis
+
+volumes:
+  dbgis-data:
+  # redis:
+  #   driver: local
+
+networks:
+  - backend
